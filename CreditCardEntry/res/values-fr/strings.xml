@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="CreditCardNumberHelp"/>
+    <string name="ExpirationDateHelp">Date d\'expiration (MM/YY)</string>
+    <string name="SecurityCodeHelp">Code de sécurité (CVV)</string>
+    <string name="ZipHelp">Code postal</string>
+</resources>

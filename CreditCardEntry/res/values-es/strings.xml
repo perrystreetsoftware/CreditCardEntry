@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="CreditCardNumberHelp"/>
+    <string name="ExpirationDateHelp">Fecha de caducidad (MM/YY)</string>
+    <string name="SecurityCodeHelp">Código de seguridad (CVV)</string>
+    <string name="ZipHelp">Código postal</string>
+
+</resources>
