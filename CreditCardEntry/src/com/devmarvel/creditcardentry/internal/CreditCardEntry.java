@@ -538,8 +538,9 @@ public class CreditCardEntry extends HorizontalScrollView implements
     }
 
     private void entryComplete(View clearField) {
-        hideKeyboard();
-        clearField.clearFocus();
+        // We don't know how long a post code is, so do not hide keyboard when entry is complete
+        // hideKeyboard();
+        // clearField.clearFocus();
         if (onCardValidCallback != null) onCardValidCallback.cardValid(getCreditCard());
     }
 
