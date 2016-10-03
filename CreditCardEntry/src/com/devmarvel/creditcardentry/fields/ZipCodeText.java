@@ -75,7 +75,7 @@ public class ZipCodeText extends CreditEntryFieldBase {
 //        }
 
 		// Global zipcode validation is too hard
-		if (s.length() >= 5) {
+		if (s.length() >= 4) {
 			setValid(true);
 			delegate.onZipCodeValid();
 		} else {
