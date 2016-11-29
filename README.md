@@ -69,6 +69,7 @@ XML
    the application's theme.
  * `app:include_helper` - boolean to show/hide the helper text under the widget (`true` by default (i.e. helper is shown))
  * `app:helper_text_color` - change the text color of the hints that appear below the widget by default.
+ * `app:include_name` - boolean to show/hide the name on card in the form (`false` by default (i.e. name is not shown))
  * `app:include_zip` - boolean to show/hide the zip code in the form (`true` by default (i.e. zip is shown))
  * `app:include_exp` - boolean to show/hide the exp in the form (`true` by default (i.e. exp is shown))
  * `app:include_security` - boolean to show/hide the security code in the form (`true` by default (i.e. security is shown))
@@ -80,22 +81,22 @@ In code:
 
 ```
     public class MainActivity extends Activity {
-  
+
       private LinearLayout linearLayout;
       private CreditCardForm form;
-  
+
       protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-  
+
         setContentView(R.layout.activity_main);
     	linearLayout = (LinearLayout) findViewById(R.id.layer);
-		
+
         form = new CreditCardForm(this);
     	linearLayout.addView(form);
-    	
+
     	buttonAuthorize = (Button) findViewById(R.id.buttonAuthorize);
     	buttonAuthorize.setOnClickListener(new OnClickListener() {
-    		
+
     		@Override
     		public void onClick(View arg0) {
     			if(form.isCreditCardValid())
@@ -119,7 +120,7 @@ In code:
 # Version History
 
 ###3/30/2016
- - made the CreditCardForm work in RTL layout 
+ - made the CreditCardForm work in RTL layout
  - added getHelperText/setHelperText to CreditEntryFieldBase
  - added setting hint & helper texts to fields
 
