@@ -5,6 +5,6 @@
     <string name="SecurityCodeHelp">Security code (CVV)</string>
     <string name="CVV">CVV</string>
     <string name="ZipHelp">Postal code</string>
-    <string name="NameHelp">Name on card</string>
+    <string name="NameHelp">Cardholder name</string>
 
 </resources>
