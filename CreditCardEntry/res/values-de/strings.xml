@@ -3,5 +3,7 @@
     <string name="CreditCardNumberHelp"/>
     <string name="ExpirationDateHelp">Ablaufdatum (MM/YY)</string>
     <string name="SecurityCodeHelp">Sicherheitscode (CVV)</string>
+    <string name="CVV">CVV</string>
     <string name="ZipHelp">Postleitzahl</string>
+    <string name="NameHelp">Name</string>
 </resources>

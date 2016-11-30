@@ -41,6 +41,7 @@ import com.devmarvel.creditcardentry.R;
 import com.devmarvel.creditcardentry.fields.CreditCardText;
 import com.devmarvel.creditcardentry.fields.CreditEntryFieldBase;
 import com.devmarvel.creditcardentry.fields.ExpDateText;
+import com.devmarvel.creditcardentry.fields.NameText;
 import com.devmarvel.creditcardentry.fields.SecurityCodeText;
 import com.devmarvel.creditcardentry.fields.ZipCodeText;
 import com.devmarvel.creditcardentry.library.CardType;
@@ -66,10 +67,11 @@ public class CreditCardEntry extends HorizontalScrollView implements
     private final ExpDateText expDateText;
     private final SecurityCodeText securityCodeText;
     private final ZipCodeText zipCodeText;
+    private NameText nameText;
 
     private Map<CreditEntryFieldBase, CreditEntryFieldBase> nextFocusField = new HashMap<>(4);
     private Map<CreditEntryFieldBase, CreditEntryFieldBase> prevFocusField = new HashMap<>(4);
-    private List<CreditEntryFieldBase> includedFields = new ArrayList<>(4);
+    private List<CreditEntryFieldBase> includedFields = new ArrayList<>();
 
     private final TextView textFourDigits;
 
@@ -417,6 +419,15 @@ public class CreditCardEntry extends HorizontalScrollView implements
         this.textHelper = textHelper;
     }
 
+    public NameText getNameEditText() {
+        return this.nameText;
+    }
+
+    public void setNameEditText(@NonNull NameText nameText) {
+        this.nameText = nameText;
+        this.includedFields.add(this.nameText);
+    }
+
     public boolean isCreditCardValid() {
         for (CreditEntryFieldBase includedField : includedFields) {
             if (!includedField.isValid()) return false;
@@ -482,7 +493,8 @@ public class CreditCardEntry extends HorizontalScrollView implements
     }
 
     public CreditCard getCreditCard() {
-        return new CreditCard(creditCardText.getText().toString(), expDateText.getText().toString(),
+        String name = nameText != null ? nameText.getText().toString() : null;
+        return new CreditCard(name, creditCardText.getText().toString(), expDateText.getText().toString(),
                 securityCodeText.getText().toString(), zipCodeText.getText().toString(),
                 creditCardText.getType());
     }

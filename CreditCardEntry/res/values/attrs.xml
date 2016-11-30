@@ -5,6 +5,7 @@
         <attr name="include_security"   format="boolean"/>
         <attr name="include_zip"        format="boolean"/>
         <attr name="include_helper"     format="boolean"/>
+        <attr name="include_name"       format="boolean"/>
 
         <attr name="helper_text_color"  format="color"/>
         <attr name="text_color"         format="color"/>

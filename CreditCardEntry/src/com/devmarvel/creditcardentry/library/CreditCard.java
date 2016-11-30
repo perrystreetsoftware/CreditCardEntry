@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class CreditCard implements Serializable {
 	
+	private final String name;
 	private final String cardNumber;
 	private final String expDate;
 	private final String securityCode;
@@ -11,12 +12,18 @@ public class CreditCard implements Serializable {
 	private final CardType cardType;
 
 
-	public CreditCard(String cardNumber, String expDate, String securityCode, String zipCode, CardType cardType) {
+	public CreditCard(String name, String cardNumber, String expDate, String securityCode, String zipCode, CardType cardType) {
+		this.name = name;
 		this.cardNumber = cardNumber;
 		this.expDate = expDate;
 		this.securityCode = securityCode;
 		this.zipCode = zipCode;
 		this.cardType = cardType;
+	}
+
+	@SuppressWarnings("unused")
+	public String getName() {
+		return name;
 	}
 
 	@SuppressWarnings("unused")
@@ -69,7 +76,8 @@ public class CreditCard implements Serializable {
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder("CreditCard{");
-		sb.append("cardNumber='").append(cardNumber).append('\'');
+		sb.append("name='").append(name).append('\'');
+		sb.append(", cardNumber='").append(cardNumber).append('\'');
 		sb.append(", expDate='").append(expDate).append('\'');
 		sb.append(", securityCode='").append(securityCode).append('\'');
 		sb.append(", zipCode='").append(zipCode).append('\'');

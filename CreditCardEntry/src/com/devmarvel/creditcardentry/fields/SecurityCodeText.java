@@ -2,7 +2,6 @@ package com.devmarvel.creditcardentry.fields;
 
 import android.content.Context;
 import android.text.Editable;
-import android.text.InputFilter;
 import android.util.AttributeSet;
 
 import com.devmarvel.creditcardentry.R;
@@ -34,7 +33,7 @@ public class SecurityCodeText extends CreditEntryFieldBase {
 
 	void init() {
 		super.init();
-		setHint("CVV");
+		this.setHint(context.getString(R.string.CVV));
 	}
 
 	/* TextWatcher Implementation Methods */

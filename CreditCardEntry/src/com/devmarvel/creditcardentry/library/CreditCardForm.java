@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.devmarvel.creditcardentry.R;
+import com.devmarvel.creditcardentry.fields.NameText;
 import com.devmarvel.creditcardentry.internal.CreditCardEntry;
 
 public class CreditCardForm extends RelativeLayout {
@@ -29,6 +30,7 @@ public class CreditCardForm extends RelativeLayout {
 	private boolean includeSecurity = true;
 	private boolean includeZip = true;
 	private boolean includeHelper;
+	private boolean includeName;
 	private int textHelperColor;
 	private Drawable inputBackground;
 	private boolean useDefaultColors;
@@ -65,6 +67,7 @@ public class CreditCardForm extends RelativeLayout {
 					this.includeSecurity = typedArray.getBoolean(R.styleable.CreditCardForm_include_security, true);
 					this.includeZip = typedArray.getBoolean(R.styleable.CreditCardForm_include_zip, true);
 					this.includeHelper = typedArray.getBoolean(R.styleable.CreditCardForm_include_helper, true);
+					this.includeName = typedArray.getBoolean(R.styleable.CreditCardForm_include_name, false);
 					this.textHelperColor = typedArray.getColor(R.styleable.CreditCardForm_helper_text_color, getResources().getColor(R.color.text_helper_color));
 					this.inputBackground = typedArray.getDrawable(R.styleable.CreditCardForm_input_background);
 					this.useDefaultColors = typedArray.getBoolean(R.styleable.CreditCardForm_default_text_colors, false);
@@ -86,6 +89,20 @@ public class CreditCardForm extends RelativeLayout {
 	}
 
 	private void init(Context context, AttributeSet attrs, int style) {
+
+		// Name EditText
+		NameText nameEditText = new NameText(context, attrs);
+		nameEditText.setId(R.id.cc_name);
+		LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
+		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+		layoutParams.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		layoutParams.setMargins(0, 0, 0, 20);
+		nameEditText.setLayoutParams(layoutParams);
+		nameEditText.setBackgroundDrawable(inputBackground);
+		nameEditText.setPadding(20, 15, 20, 20);
+		nameEditText.setVisibility(includeName ? View.VISIBLE : View.GONE);
+		this.addView(nameEditText);
+
 		// the wrapper layout
 		LinearLayout layout;
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
@@ -94,15 +111,15 @@ public class CreditCardForm extends RelativeLayout {
 			layout = new LinearLayout(context);
 		}
 
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            //ignore RTL layout direction
-            layout.setLayoutDirection(LAYOUT_DIRECTION_LTR);
-        }
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+			//ignore RTL layout direction
+			layout.setLayoutDirection(LAYOUT_DIRECTION_LTR);
+		}
 
 		layout.setId(R.id.cc_form_layout);
 		LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT);
 		params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
-		params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+		params.addRule(RelativeLayout.BELOW, nameEditText.getId());
 		params.addRule(LinearLayout.HORIZONTAL);
 		params.setMargins(0, 0, 0, 0);
 		layout.setLayoutParams(params);
@@ -120,13 +137,13 @@ public class CreditCardForm extends RelativeLayout {
 		cardImageFrame.setPadding(10, 0, 0, 0);
 
 		ImageView cardFrontImage = new ImageView(context);
-		LayoutParams layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		cardFrontImage.setLayoutParams(layoutParams);
 		cardFrontImage.setImageResource(CardType.INVALID.frontResource);
 		cardImageFrame.addView(cardFrontImage);
 
 		ImageView cardBackImage = new ImageView(context);
-		layoutParams = new RelativeLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+		layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		cardBackImage.setLayoutParams(layoutParams);
 		cardBackImage.setImageResource(CardType.INVALID.backResource);
 		cardBackImage.setVisibility(View.GONE);
@@ -137,7 +154,7 @@ public class CreditCardForm extends RelativeLayout {
 		LinearLayout.LayoutParams entryParams = new LinearLayout.LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 		entryParams.gravity = Gravity.CENTER_VERTICAL;
 		entry = new CreditCardEntry(context, includeExp, includeSecurity, includeZip, attrs, style);
-        entry.setId(R.id.cc_entry);
+		entry.setId(R.id.cc_entry);
 
 		// this obnoxious 6 for bottom padding is to make the damn text centered on the image... if you know a better way... PLEASE HELP
 		entry.setPadding(0, 0, 0, 6);
@@ -155,7 +172,7 @@ public class CreditCardForm extends RelativeLayout {
 		// set up optional helper text view
 		if (includeHelper) {
 			TextView textHelp = new TextView(context);
-            textHelp.setId(R.id.text_helper);
+			textHelp.setId(R.id.text_helper);
 			textHelp.setText(getResources().getString(R.string.CreditCardNumberHelp));
 			if (useDefaultColors) {
 				textHelp.setTextColor(this.textHelperColor);
@@ -167,6 +184,10 @@ public class CreditCardForm extends RelativeLayout {
 			textHelp.setLayoutParams(layoutParams);
 			entry.setTextHelper(textHelp);
 			this.addView(textHelp);
+		}
+
+		if (includeName) {
+			entry.setNameEditText(nameEditText);
 		}
 
 		layout.addView(entry);
@@ -336,38 +357,38 @@ public class CreditCardForm extends RelativeLayout {
 		});
 	}
 
-    /** helper & hint setting **/
+	/** helper & hint setting **/
 
-    public void setCreditCardTextHelper(String text) {
-        entry.setCreditCardTextHelper(text);
-    }
+	public void setCreditCardTextHelper(String text) {
+		entry.setCreditCardTextHelper(text);
+	}
 
-    public void setCreditCardTextHint(String text) {
-        entry.setCreditCardTextHint(text);
-    }
+	public void setCreditCardTextHint(String text) {
+		entry.setCreditCardTextHint(text);
+	}
 
-    public void setExpDateTextHelper(String text) {
-        entry.setExpDateTextHelper(text);
-    }
+	public void setExpDateTextHelper(String text) {
+		entry.setExpDateTextHelper(text);
+	}
 
-    public void setExpDateTextHint(String text) {
-        entry.setExpDateTextHint(text);
-    }
+	public void setExpDateTextHint(String text) {
+		entry.setExpDateTextHint(text);
+	}
 
-    public void setSecurityCodeTextHelper(String text) {
-        entry.setSecurityCodeTextHelper(text);
-    }
+	public void setSecurityCodeTextHelper(String text) {
+		entry.setSecurityCodeTextHelper(text);
+	}
 
-    public void setSecurityCodeTextHint(String text) {
-        entry.setSecurityCodeTextHint(text);
-    }
+	public void setSecurityCodeTextHint(String text) {
+		entry.setSecurityCodeTextHint(text);
+	}
 
-    public void setZipCodeTextHelper(String text) {
-        entry.setZipCodeTextHelper(text);
-    }
+	public void setZipCodeTextHelper(String text) {
+		entry.setZipCodeTextHelper(text);
+	}
 
-    public void setZipCodeTextHint(String text) {
-        entry.setZipCodeTextHint(text);
-    }
+	public void setZipCodeTextHint(String text) {
+		entry.setZipCodeTextHint(text);
+	}
 }
 
