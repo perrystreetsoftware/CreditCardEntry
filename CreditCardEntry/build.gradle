@@ -15,6 +15,7 @@ repositories {
 }
 
 android {
+    namespace 'com.devmarvel.creditcardentry'
     compileSdkVersion rootProject.ext.compileSdkVersion
 
     defaultConfig {
