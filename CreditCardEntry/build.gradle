@@ -1,25 +1,13 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        jcenter()
-        google()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.6.3'
-    }
-}
-apply plugin: 'com.android.library'
-
-repositories {
-    mavenCentral()
+plugins {
+    alias libs.plugins.android.library
 }
 
 android {
     namespace 'com.devmarvel.creditcardentry'
-    compileSdkVersion rootProject.ext.compileSdkVersion
 
+    compileSdk libs.versions.android.sdk.compile.get().toInteger()
     defaultConfig {
-        minSdkVersion 14
+        minSdkVersion libs.versions.android.sdk.min.get()
         targetSdkVersion rootProject.ext.targetSdkVersion
     }
 
@@ -37,5 +25,5 @@ android {
 }
 
 dependencies {
-    implementation "androidx.legacy:legacy-support-v4:1.0.0-beta01"
+    implementation libs.androidx.legacy.support.v4
 }
