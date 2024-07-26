@@ -8,7 +8,7 @@ android {
     compileSdk libs.versions.android.sdk.compile.get().toInteger()
     defaultConfig {
         minSdkVersion libs.versions.android.sdk.min.get()
-        targetSdkVersion rootProject.ext.targetSdkVersion
+        targetSdkVersion libs.versions.android.sdk.target.get()
     }
 
     sourceSets {
